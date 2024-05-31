@@ -34,7 +34,7 @@ class Player {
         } else {
             newCandyInventory.push({ candy, amount });
         }
-        this.money += candy.price * amount;
+        this.money -= candy.price * amount;
         // Return a new Player instance with the updated inventory and same current city
         return new Player(this.name, this.money, newCandyInventory, this.currentCity);
     }

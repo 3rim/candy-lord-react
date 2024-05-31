@@ -18,6 +18,9 @@ function GameBoard() {
     const [player, setPlayer] = useState(initialPlayer);
 
     const handleTravel = (destination: City) => {
+        if (destination === player.currentCity) {
+            return;
+        }
         const travelCost = City.getTravelPriceList(player.currentCity).get(destination);
         console.log(travelCost);
         if (player.money >= travelCost) {

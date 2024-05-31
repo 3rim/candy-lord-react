@@ -1,4 +1,4 @@
-import { CandyCollection } from '../classes/Candy';
+import { CandyCollection,Candy } from '../classes/Candy';
 import Player from '../classes/Player';
 
 interface Props {
@@ -8,6 +8,32 @@ interface Props {
 }
 
 function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
+    const canBuy = (candy: Candy) => {
+        return player.money >= candy.price;
+    };
+
+    const canSell = (candy: Candy) => {
+        return player.getCandyAmount(candy) > 0;
+    };
+
+    const handleBuy = (candy: Candy) => {
+        if (canBuy(candy)) {
+            const updatedPlayer = player.buyCandy(candy, 1);
+            onBuy(updatedPlayer);
+        } else {
+            console.log("Not enough money to buy " + candy.name);
+        }
+    };
+
+    const handleSell = (candy: Candy) => {
+        if (canSell(candy)) {
+            const updatedPlayer = player.sellCandy(candy, 1);
+            onBuy(updatedPlayer);
+        } else {
+            console.log("No " + candy.name + " to sell");
+        }
+    };
+
     return (
         <>
             <div>Schwarzmarkt: {player.currentCity.name}</div>
@@ -16,18 +42,14 @@ function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
                     <li className="list-group-item d-flex justify-content-between" key={index}>
                         <div className="d-flex">
                             <button type="button" className="btn btn-danger btn-sm"
-                            onClick={() => {
-                                const updatedPlayer = player.sellCandy(candy, 1);
-                                onBuy(updatedPlayer);
-                            }}
+                                onClick={() => handleSell(candy)}
+                                disabled={!canSell(candy)}
                             >-</button>
                             <button
                                 type="button"
                                 className="btn btn-primary btn-sm mx-1"
-                                onClick={() => {
-                                    const updatedPlayer = player.buyCandy(candy, 1);
-                                    onBuy(updatedPlayer);
-                                }}
+                                onClick={() => handleBuy(candy)}
+                                disabled={!canBuy(candy)}
                             >
                                 +
                             </button>
