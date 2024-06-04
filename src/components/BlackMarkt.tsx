@@ -9,7 +9,7 @@ interface Props {
 
 function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
     const canBuy = (candy: Candy) => {
-        return player.money >= candy.price;
+        return player.money >= candy.price && player.getTotalCandyAmount() < player.maxCandyCapacity;
     };
 
     const canSell = (candy: Candy) => {

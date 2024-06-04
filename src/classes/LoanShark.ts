@@ -1,14 +1,14 @@
 class LoanShark {
     interestRate: number;
-    loanDays: number;
+    remainingDays: number;
 
     constructor(interestRate: number = 0.05) {
         this.interestRate = interestRate;
-        this.loanDays = 0;
+        this.remainingDays = 7;
     }
 
     getLoanPaybackAmount(loanAmount: number): number {
-        return loanAmount * Math.pow(1 + this.interestRate, this.loanDays);
+        return loanAmount * Math.pow(1 + this.interestRate, this.remainingDays);
     }
 
     borrowMoney(playerMoney: number, amount: number): [number, number] {
@@ -19,8 +19,8 @@ class LoanShark {
         return [playerMoney - amount, Math.max(0, amount - playerMoney)];
     }
 
-    advanceDateByOneDay(): void {
-        this.loanDays++;
+    reduceRemainingDays(): void {
+        this.remainingDays--
     }
 }
 

@@ -15,13 +15,15 @@ class Player {
     startDate: Date;
     loanShark: LoanShark;
     bank: Bank;
+    maxCandyCapacity: number;
 
     constructor(money: number = 0,
         candyInventory: Array<InventoryItem> = [],
         currentCity: City,
         startDate: Date = new Date(),
         loanShark: LoanShark = new LoanShark(),
-        bank: Bank = new Bank()
+        bank: Bank = new Bank(),
+        maxCandyCapacity = 10
     ) {
         this.money = money;
         this.candyInventory = candyInventory;
@@ -29,6 +31,13 @@ class Player {
         this.startDate = startDate;
         this.loanShark = loanShark;
         this.bank = bank;
+        this.maxCandyCapacity = maxCandyCapacity;
+    }
+
+    // Method to check if the candy inventory exceeds the maximum capacity
+     exceedsCapacity(candy: Candy, amount: number): boolean {
+        const currentAmount = this.getCandyAmount(candy);
+        return currentAmount + amount > this.maxCandyCapacity;
     }
 
     getCurrentDate(): string {
@@ -45,12 +54,12 @@ class Player {
         this.bank.deposit(amount);
         console.log(this.bank);
         console.log(`Deposited ${amount} into the bank.`);
-        return new Player(this.money-amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+        return new Player(this.money - amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     withdraw(amount: number): Player {
         this.bank.withdraw(amount);
-        return new Player(this.money+amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+        return new Player(this.money + amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     getBankBalance(): number {
@@ -74,7 +83,7 @@ class Player {
         }
         this.money -= candy.price * amount;
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.money, newCandyInventory, this.currentCity);
+        return new Player(this.money,newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     sellCandy(candy: Candy, amount: number): Player {
@@ -100,7 +109,7 @@ class Player {
         }
 
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.money, newCandyInventory, this.currentCity);
+        return new Player(this.money,newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     getCandyAmount(candy: Candy): number {
@@ -110,6 +119,10 @@ class Player {
 
     getInventory(): Array<InventoryItem> {
         return this.candyInventory;
+    }
+
+    getTotalCandyAmount(): number {
+        return this.candyInventory.reduce((total, item) => total + item.amount, 0);
     }
 
     travelToCity(destination: City, travelCost: number): Player {

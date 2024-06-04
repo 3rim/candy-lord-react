@@ -22,6 +22,7 @@ function PlayerComponent({ player }: PlayerProps) {
             </ul>
             <div>
                 <p>Your Cash: {player.money}$</p>
+                <p>Currenty holds: {player.getTotalCandyAmount()} / {player.maxCandyCapacity}</p>
             </div>
         </>
     )
