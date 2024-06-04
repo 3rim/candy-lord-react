@@ -40,7 +40,7 @@ function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
             <ul className="list-group">
                 {candyCollection.getCandies.map((candy, index) => (
                     <li className="list-group-item d-flex justify-content-between" key={index}>
-                        <div className="d-flex">
+                        <div className="d-flex align-items-center">
                             <button type="button" className="btn btn-danger btn-sm"
                                 onClick={() => handleSell(candy)}
                                 disabled={!canSell(candy)}
@@ -50,6 +50,7 @@ function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
                                 className="btn btn-primary btn-sm mx-1"
                                 onClick={() => handleBuy(candy)}
                                 disabled={!canBuy(candy)}
+                                
                             >
                                 +
                             </button>

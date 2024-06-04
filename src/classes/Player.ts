@@ -1,5 +1,7 @@
 import { Candy } from "./Candy";
-import { City } from "./City"; // Assuming City class is defined in a separate file
+import { City } from "./City";
+import Bank from "./Bank";
+import LoanShark from "./LoanShark";
 
 interface InventoryItem {
     candy: Candy;
@@ -7,16 +9,52 @@ interface InventoryItem {
 }
 
 class Player {
-    name: string;
     candyInventory: Array<InventoryItem>;
     money: number;
     currentCity: City; // Include current city as part of the player's state
+    startDate: Date;
+    loanShark: LoanShark;
+    bank: Bank;
 
-    constructor(name: string, money: number = 0, candyInventory: Array<InventoryItem> = [], currentCity: City) {
-        this.name = name;
+    constructor(money: number = 0,
+        candyInventory: Array<InventoryItem> = [],
+        currentCity: City,
+        startDate: Date = new Date(),
+        loanShark: LoanShark = new LoanShark(),
+        bank: Bank = new Bank()
+    ) {
         this.money = money;
         this.candyInventory = candyInventory;
         this.currentCity = currentCity;
+        this.startDate = startDate;
+        this.loanShark = loanShark;
+        this.bank = bank;
+    }
+
+    getCurrentDate(): string {
+        return this.startDate.toDateString();
+    }
+
+    advanceDateByOneDay(): Player {
+        const nextDay = new Date(this.startDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        return new Player(this.money, this.candyInventory, this.currentCity, nextDay, this.loanShark, this.bank);
+    }
+
+    deposit(amount: number): Player {
+        this.bank.deposit(amount);
+        console.log(this.bank);
+        console.log(`Deposited ${amount} into the bank.`);
+        return new Player(this.money-amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+    }
+
+    withdraw(amount: number): Player {
+        this.bank.withdraw(amount);
+        return new Player(this.money+amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+    }
+
+    getBankBalance(): number {
+        return this.bank.getBankBalance();
     }
 
     // Method to create a new Player instance with updated inventory
@@ -36,7 +74,7 @@ class Player {
         }
         this.money -= candy.price * amount;
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.name, this.money, newCandyInventory, this.currentCity);
+        return new Player(this.money, newCandyInventory, this.currentCity);
     }
 
     sellCandy(candy: Candy, amount: number): Player {
@@ -62,7 +100,7 @@ class Player {
         }
 
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.name, this.money, newCandyInventory, this.currentCity);
+        return new Player(this.money, newCandyInventory, this.currentCity);
     }
 
     getCandyAmount(candy: Candy): number {
@@ -74,9 +112,19 @@ class Player {
         return this.candyInventory;
     }
 
-    // Method to update player's current city when traveling
-    travelToCity(city: City,travelCost:number): Player {
-        return new Player(this.name, this.money-travelCost, this.candyInventory, city);
+    travelToCity(destination: City, travelCost: number): Player {
+        if (this.money < travelCost) {
+            throw new Error("Insufficient funds to travel.");
+        }
+        const updatedPlayer = new Player(
+            this.money - travelCost,
+            this.candyInventory,
+            destination,
+            this.startDate,
+            this.loanShark,
+            this.bank
+        );
+        return updatedPlayer.advanceDateByOneDay();
     }
 }
 

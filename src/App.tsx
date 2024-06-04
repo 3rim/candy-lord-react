@@ -7,7 +7,7 @@ function App() {
   
   return (
     <>
-      <div className='container '>
+      <div className='container'>
         <p className="text-center">Candy Lord</p>
         <GameBoard></GameBoard>
       </div>
