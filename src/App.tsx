@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div className='container'>
-        <p className="text-center">Candy Lord</p>
+        <h1 className="text-center road-rage-regular "style={{fontSize: "6em"}}>Candy Lord</h1>
         <GameBoard></GameBoard>
       </div>
     </>

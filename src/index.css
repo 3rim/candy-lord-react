@@ -1,3 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Road+Rage&display=swap');
+
+.road-rage-regular {
+    font-family: "Road Rage", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+
 body{
-    background-color: white;
+    background-color: #070F2B;
+    color: azure;
+}
+
+.custom-bg-primary {
+    background-color: #1B1A55 !important;
+}
+.custom-bg-secondary {
+    background-color: #535C91;
+}
+.custom-bg-tertiary {
+    background-color: #9290C3;
+}
+
+
+.custom-text-white {
+    color: white;
+}
+
+.custom-btn-primary {
+    background-color: #e15151 !important;
+    border-color: #e15151 !important;
+    color: white;
+}
+.custom-btn-primary:hover {
+    background-color: #fd2a00 !important;
+    border-color: #fd2a00 !important;
+}
+
+
+.custom-btn-secondary {
+    background-color: #32a68b !important;
+    border-color: #32a68b !important;
+    color: white;    
+}
+.custom-btn-secondary:hover {
+    background-color: #10715a !important;
+    border-color: #10715a !important;
+}
+
+
+
+/* Grouped selector for disabled state */
+.custom-btn-primary:disabled,
+.custom-btn-secondary:disabled {
+    background-color: #c7c2c0 !important;
+    border-color: #c7c2c0 !important;
+    color: white !important;
 }

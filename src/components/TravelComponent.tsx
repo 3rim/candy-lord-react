@@ -15,10 +15,10 @@ function TravelComponent({  playerLocation, cities, onTravel }: TravelProps) {
     };
     return (
         <>
-            <div>Travel</div>
+            <div className="fs-5">Travel</div>
             <ul className="list-group">
                 {cities.map((city, index) => (
-                    <li className="list-group-item d-flex justify-content-between" key={index}>
+                    <li className="list-group-item d-flex justify-content-between custom-bg-secondary custom-text-white" key={index}>
                         <div className="me-auto">
                             {city.name}
                         </div>

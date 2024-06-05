@@ -41,7 +41,7 @@ const BankModal: React.FC<BankModalProps> = ({ player, onClose, onDeposit, onWit
     };
 
     return (
-        <div className="modal show d-block" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+        <div className="modal show d-block" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)",color:"black" }}>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -53,7 +53,7 @@ const BankModal: React.FC<BankModalProps> = ({ player, onClose, onDeposit, onWit
                     <div className="modal-body">
                         <p>Current Balance: {player.getBankBalance()}$</p>
                         <p>Cash on Hand: {player.money}$</p>
-                        <div className="form-group">
+                        <div className="form-group d-flex">
                             <label htmlFor="depositAmount">Deposit Amount:</label>
                             <input
                                 type="number"
@@ -61,9 +61,13 @@ const BankModal: React.FC<BankModalProps> = ({ player, onClose, onDeposit, onWit
                                 className="form-control"
                                 value={depositAmount}
                                 onChange={handleDepositChange}
+                                
                             />
+                            <button type="button" className="btn btn-primary ms-1" onClick={handleDeposit}>
+                            Deposit
+                        </button>
                         </div>
-                        <div className="form-group">
+                        <div className="form-group d-flex mt-2">
                             <label htmlFor="withdrawAmount">Withdraw Amount:</label>
                             <input
                                 type="number"
@@ -72,18 +76,17 @@ const BankModal: React.FC<BankModalProps> = ({ player, onClose, onDeposit, onWit
                                 value={withdrawAmount}
                                 onChange={handleWithdrawChange}
                             />
+                               
+                        <button type="button" className="btn btn-primary ms-1" onClick={handleWithdraw}>
+                            Withdraw
+                        </button>
                         </div>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={onClose}>
                             Close
                         </button>
-                        <button type="button" className="btn btn-primary" onClick={handleDeposit}>
-                            Deposit
-                        </button>
-                        <button type="button" className="btn btn-primary" onClick={handleWithdraw}>
-                            Withdraw
-                        </button>
+                     
                     </div>
                 </div>
             </div>

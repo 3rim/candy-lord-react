@@ -48,31 +48,32 @@ function GameBoard() {
     return (
         <>
             <div className="row text-center">
-                <div className="col bg-info-subtle p-2">
+                <div className="col custom-bg-primary p-2 " >
                     <PlayerComponent player={player} />
                 </div>
-                <div className="col bg-warning-subtle p-2">
+                <div className="col custom-bg-primary p-2">
                     <BlackMarktComponent player={player} candyCollection={candies} onBuy={setPlayer} />
                 </div>
-                <div className="col bg-success p-2">
+                <div className="col custom-bg-primary p-2">
                     <TravelComponent playerLocation={player.currentCity} cities={cities} onTravel={handleTravel} />
                 </div>
             </div>
-            <div className='row'>
-                <div className='col-8 bg-danger'>
-                    <div>Current Date: {player.getCurrentDate()}</div>
+            <div className='row '>
+                <div className='col-8 custom-bg-tertiary'>
+                    <div className='fs-3'>Current Date: {player.getCurrentDate()}</div>
                 </div>
-                <div className='col bg-danger-subtle p-2 flex-wrap '>
+                <div className='col custom-bg-tertiary p-2 flex-wrap '>
                     <div className='mb-1'>
-                        <button className='btn btn-info' onClick={() => setShowBankModal(true)}>Visit Bank</button>
+                        <button className='btn ' style={{backgroundColor:"#F2613F"}} onClick={() => setShowBankModal(true)}>Visit Bank</button>
                         <span> Deposit: {player.getBankBalance()}$</span>
                     </div>
                     <div className=''>
-                        <button className='btn btn-info'>Visit Loanshark</button>
+                        <button className='btn' style={{backgroundColor:"#F2613F"}}>Visit Loanshark</button>
                         <span> Dept:</span> <span> Payback time:</span>
                     </div>
                 </div>
             </div>
+
             {showBankModal && (
                 <BankModal
                     player={player}

@@ -36,18 +36,18 @@ function BlackMarktComponent({ player, candyCollection, onBuy }: Props) {
 
     return (
         <>
-            <div>Schwarzmarkt: {player.currentCity.name}</div>
+            <div className='fs-5'>Black market: {player.currentCity.name}</div>
             <ul className="list-group">
                 {candyCollection.getCandies.map((candy, index) => (
-                    <li className="list-group-item d-flex justify-content-between" key={index}>
+                    <li className="list-group-item d-flex justify-content-between custom-bg-secondary custom-text-white" key={index}>
                         <div className="d-flex align-items-center">
-                            <button type="button" className="btn btn-danger btn-sm"
+                            <button type="button" className="btn custom-btn-primary btn-sm"
                                 onClick={() => handleSell(candy)}
                                 disabled={!canSell(candy)}
                             >-</button>
                             <button
                                 type="button"
-                                className="btn btn-primary btn-sm mx-1"
+                                className="btn custom-btn-secondary btn-sm mx-1"
                                 onClick={() => handleBuy(candy)}
                                 disabled={!canBuy(candy)}
                                 
