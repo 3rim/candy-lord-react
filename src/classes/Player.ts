@@ -35,7 +35,7 @@ class Player {
     }
 
     // Method to check if the candy inventory exceeds the maximum capacity
-     exceedsCapacity(candy: Candy, amount: number): boolean {
+    exceedsCapacity(candy: Candy, amount: number): boolean {
         const currentAmount = this.getCandyAmount(candy);
         return currentAmount + amount > this.maxCandyCapacity;
     }
@@ -47,13 +47,12 @@ class Player {
     advanceDateByOneDay(): Player {
         const nextDay = new Date(this.startDate);
         nextDay.setDate(nextDay.getDate() + 1);
+        this.loanShark.reduceRemainingDays();
         return new Player(this.money, this.candyInventory, this.currentCity, nextDay, this.loanShark, this.bank);
     }
 
     deposit(amount: number): Player {
         this.bank.deposit(amount);
-        console.log(this.bank);
-        console.log(`Deposited ${amount} into the bank.`);
         return new Player(this.money - amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
@@ -83,7 +82,7 @@ class Player {
         }
         this.money -= candy.price * amount;
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.money,newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+        return new Player(this.money, newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     sellCandy(candy: Candy, amount: number): Player {
@@ -109,7 +108,7 @@ class Player {
         }
 
         // Return a new Player instance with the updated inventory and same current city
-        return new Player(this.money,newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+        return new Player(this.money, newCandyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 
     getCandyAmount(candy: Candy): number {
@@ -138,6 +137,24 @@ class Player {
             this.bank
         );
         return updatedPlayer.advanceDateByOneDay();
+    }
+
+    borrowFromLoanShark(amount: number): Player {
+        if (this.loanShark.currentLoanAmount == 0) {
+            const newMoney = this.loanShark.borrowMoney(amount);
+            this.money += newMoney;
+            return new Player(this.money, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+        }else
+        return new Player(this.money, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
+
+    }
+
+    repayLoan(amount: number): Player {
+        if (this.loanShark.currentLoanAmount <= 0) {
+            throw new Error("No loan to repay.");
+        }	
+        this.loanShark.repayLoan(amount);
+        return new Player(this.money - amount, this.candyInventory, this.currentCity, this.startDate, this.loanShark, this.bank);
     }
 }
 

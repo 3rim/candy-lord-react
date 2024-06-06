@@ -1,26 +1,33 @@
 class LoanShark {
     interestRate: number;
     remainingDays: number;
+    currentLoanAmount: number;
 
-    constructor(interestRate: number = 0.05) {
+    constructor(interestRate: number = 0.05, initialDays: number = 7) {
         this.interestRate = interestRate;
-        this.remainingDays = 7;
+        this.remainingDays = initialDays;
+        this.currentLoanAmount = 0;
     }
 
-    getLoanPaybackAmount(loanAmount: number): number {
-        return loanAmount * Math.pow(1 + this.interestRate, this.remainingDays);
+    getLoanPaybackAmount(): number {
+        return this.currentLoanAmount;
     }
 
-    borrowMoney(playerMoney: number, amount: number): [number, number] {
-        return [playerMoney + amount, amount];
+    borrowMoney(amount: number): number {
+        this.currentLoanAmount += amount;
+        return this.currentLoanAmount;
     }
 
-    repayLoan(playerMoney: number, amount: number): [number, number] {
-        return [playerMoney - amount, Math.max(0, amount - playerMoney)];
+    repayLoan(amount: number): number {
+        const remainingLoan = this.getLoanPaybackAmount() - amount;
+        this.currentLoanAmount = remainingLoan;
+        console.log(this.currentLoanAmount);
+        return this.currentLoanAmount;
     }
 
     reduceRemainingDays(): void {
-        this.remainingDays--
+        this.remainingDays--;
+        this.currentLoanAmount = Math.round(this.currentLoanAmount * (1 + this.interestRate));
     }
 }
 

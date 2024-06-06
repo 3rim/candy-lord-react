@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import TravelComponent from '../components/TravelComponent';
-import BlackMarktComponent from './BlackMarkt';
+import BlackMarktComponent from './BlackMarket';
 import PlayerComponent from './PlayerComponent';
 import Player from '../classes/Player';
 import { CandyCollection } from '../classes/Candy';
 import { City } from '../classes/City';
 import BankModal from '../components/BankModal';
+import LoanSharkModal from './LoanSharkModal';
 
 const candies = new CandyCollection();
 const cities = City.getAllCities();
@@ -19,6 +20,7 @@ const initialPlayer = new Player(
 function GameBoard() {
     const [player, setPlayer] = useState(initialPlayer);
     const [showBankModal, setShowBankModal] = useState(false);
+    const [showLoanSharkModal, setLoanSharkModal] = useState(false);
 
     const handleTravel = (destination: City) => {
         if (destination === player.currentCity) {
@@ -45,6 +47,20 @@ function GameBoard() {
         setPlayer(updatedPlayer);
     };
 
+    // Callback function to handle borrowing money
+    const handleBorrow = (amount:number) => {
+        const updatedPlayer = player.borrowFromLoanShark(amount);
+        console.log(updatedPlayer);
+        setPlayer(updatedPlayer);
+    };
+
+    // Callback function to handle repaying money
+    const handleRepay = (amount:number) => {
+        const updatedPlayer = player.repayLoan(amount);
+        console.log(updatedPlayer);
+        setPlayer(updatedPlayer);
+    };
+
     return (
         <>
             <div className="row text-center">
@@ -68,8 +84,8 @@ function GameBoard() {
                         <span> Deposit: {player.getBankBalance()}$</span>
                     </div>
                     <div className=''>
-                        <button className='btn' style={{backgroundColor:"#F2613F"}}>Visit Loanshark</button>
-                        <span> Dept:</span> <span> Payback time:</span>
+                        <button className='btn' style={{backgroundColor:"#F2613F"}} onClick={() => setLoanSharkModal(true)}>Visit Loanshark</button>
+                        <div> Dept: {player.loanShark.currentLoanAmount} $</div> <span> Payback time in: {player.loanShark.remainingDays}</span>
                     </div>
                 </div>
             </div>
@@ -80,6 +96,14 @@ function GameBoard() {
                     onClose={() => setShowBankModal(false)}
                     onDeposit={handleDeposit}
                     onWithdraw={handleWithdraw}
+                />
+            )}
+            {showLoanSharkModal && (
+                <LoanSharkModal
+                    player={player}
+                    onClose={() => setLoanSharkModal(false)}
+                    onBorrow={handleBorrow}
+                    onRepay={handleRepay}
                 />
             )}
         </>
