@@ -52,7 +52,8 @@ body{
 
 /* Grouped selector for disabled state */
 .custom-btn-primary:disabled,
-.custom-btn-secondary:disabled {
+.custom-btn-secondary:disabled,
+.btn-primary:disabled {
     background-color: #c7c2c0 !important;
     border-color: #c7c2c0 !important;
     color: white !important;

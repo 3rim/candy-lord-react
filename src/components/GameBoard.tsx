@@ -71,7 +71,7 @@ function GameBoard() {
                     <BlackMarktComponent player={player} candyCollection={candies} onBuy={setPlayer} />
                 </div>
                 <div className="col custom-bg-primary p-2">
-                    <TravelComponent playerLocation={player.currentCity} cities={cities} onTravel={handleTravel} />
+                    <TravelComponent player={player} playerLocation={player.currentCity} cities={cities} onTravel={handleTravel} />
                 </div>
             </div>
             <div className='row '>

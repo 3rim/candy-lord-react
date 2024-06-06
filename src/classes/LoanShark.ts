@@ -10,7 +10,7 @@ class LoanShark {
     }
 
     getLoanPaybackAmount(): number {
-        return this.currentLoanAmount;
+        return Math.round(this.currentLoanAmount);
     }
 
     borrowMoney(amount: number): number {

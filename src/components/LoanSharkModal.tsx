@@ -54,8 +54,7 @@ const LoanSharkModal: React.FC<LoanSharkModalProps> = ({ player, onClose, onBorr
                         </button>
                     </div>
                     <div className="modal-body">
-                        <p>Current Loan: {player.loanShark.currentLoanAmount}$</p>
-                        <p>Loan Payback Amount: {player.loanShark.getLoanPaybackAmount().toFixed(2)}$</p>
+                        <p>Loan Payback Amount: {player.loanShark.getLoanPaybackAmount()}$</p>
                         <p>Cash on Hand: {player.money}$</p>
                         <div className="form-group d-flex">
                             <label htmlFor="borrowAmount">Borrow Amount:</label>
